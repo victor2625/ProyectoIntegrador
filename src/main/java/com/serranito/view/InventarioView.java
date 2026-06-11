@@ -2,7 +2,7 @@ package com.serranito.view;
 
 import com.serranito.controller.InventarioController;
 import com.serranito.model.Envase;
-
+import com.serranito.view.VentaView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

@@ -9,13 +9,13 @@ public class LoginController {
     private UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 
     public boolean autenticar(String usuario, String password) {
-    System.out.println("Intentando autenticar: " + usuario);
-    if (StringUtils.isBlank(usuario) || StringUtils.isBlank(password)) {
-        System.out.println("Usuario o contraseña vacíos");
-        return false;
+        System.out.println("Intentando autenticar: " + usuario);
+        if (StringUtils.isBlank(usuario) || StringUtils.isBlank(password)) {
+            System.out.println("Usuario o contraseña vacíos");
+            return false;
+        }
+        boolean resultado = usuarioDAO.validarCredenciales(usuario, password);
+        System.out.println("Resultado autenticación: " + resultado);
+        return resultado;
     }
-    boolean resultado = usuarioDAO.validarCredenciales(usuario, password);
-    System.out.println("Resultado autenticación: " + resultado);
-    return resultado;
-}
 }

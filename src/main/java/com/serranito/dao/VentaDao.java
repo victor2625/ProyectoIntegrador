@@ -1,7 +1,7 @@
 package com.serranito.dao;
 
-import com.serranito.model.Venta;
 import java.util.List;
+import com.serranito.model.Venta;
 
 public interface VentaDAO {
     void registrarVenta(Venta venta);

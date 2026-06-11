@@ -16,18 +16,21 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public boolean validarCredenciales(String nombre, String contrasena) {
-    String sql = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?";
-    try (PreparedStatement ps = conn.prepareStatement(sql)) {
-        ps.setString(1, nombre);
-        ps.setString(2, contrasena);
-        ResultSet rs = ps.executeQuery();
-        boolean existe = rs.next();
-        System.out.println("Usuario encontrado: " + existe);
-        return existe;
-    } catch (SQLException e) {
-        System.err.println("Error SQL: " + e.getMessage());
-        e.printStackTrace();
-        return false;
+        String sql = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ps.setString(2, contrasena);
+            ResultSet rs = ps.executeQuery();
+            boolean existe = rs.next();
+            if (existe) {
+                logger.info("Inicio de sesión exitoso para: {}", nombre);
+            } else {
+                logger.warn("Intento de login fallido: {}", nombre);
+            }
+            return existe;
+        } catch (SQLException e) {
+            logger.error("Error en validación de credenciales", e);
+            return false;
+        }
     }
-}
 }
