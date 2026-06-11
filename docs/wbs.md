@@ -1,0 +1,13 @@
+# WBS (Work Breakdown Structure)
+
+1. Gestión y planificación (5 días)
+   1.1. Planificación inicial (3 días)
+   1.2. Configuración de entorno (2 días)
+2. Desarrollo del software (37 días)
+   2.1. Módulo de inventario (10 días)
+   2.2. Módulo de ventas (12 días)
+   2.3. Módulo de clientes (8 días)
+   2.4. Módulo de reportes (7 días)
+3. Pruebas e implementación (8 días)
+   3.1. Pruebas unitarias y de integración (5 días)
+   3.2. Implementación y capacitación (3 días)
