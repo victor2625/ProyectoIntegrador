@@ -1,0 +1,11 @@
+com\serranito\controller\LoginController.class
+com\serranito\controller\InventarioController.class
+com\serranito\view\LoginView.class
+com\serranito\dao\EnvaseDAO.class
+com\serranito\model\Envase.class
+com\serranito\dao\UsuarioDAOImpl.class
+com\serranito\util\DatabaseConnection.class
+com\serranito\view\InventarioView.class
+com\serranito\App.class
+com\serranito\dao\UsuarioDAO.class
+com\serranito\dao\EnvaseDAOImpl.class
