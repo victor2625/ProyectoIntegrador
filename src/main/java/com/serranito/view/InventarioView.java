@@ -2,11 +2,17 @@ package com.serranito.view;
 
 import com.serranito.controller.InventarioController;
 import com.serranito.model.Envase;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -19,51 +25,59 @@ public class InventarioView {
     private ObservableList<Envase> data = FXCollections.observableArrayList();
 
     public void start(Stage stage) {
-        // Columnas
-        TableColumn<Envase, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<Envase, String> colTipo = new TableColumn<>("Tipo");
-        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        TableColumn<Envase, String> colCapacidad = new TableColumn<>("Capacidad");
-        colCapacidad.setCellValueFactory(new PropertyValueFactory<>("capacidad"));
-        TableColumn<Envase, Integer> colStock = new TableColumn<>("Stock");
-        colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        TableColumn<Envase, Double> colPrecio = new TableColumn<>("Precio S/.");
-        colPrecio.setCellValueFactory(new PropertyValueFactory<>("precioUnidad"));
+    // Columnas
+    TableColumn<Envase, Integer> colId = new TableColumn<>("ID");
+    colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+    TableColumn<Envase, String> colTipo = new TableColumn<>("Tipo");
+    colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+    TableColumn<Envase, String> colCapacidad = new TableColumn<>("Capacidad");
+    colCapacidad.setCellValueFactory(new PropertyValueFactory<>("capacidad"));
+    TableColumn<Envase, Integer> colStock = new TableColumn<>("Stock");
+    colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+    TableColumn<Envase, Double> colPrecio = new TableColumn<>("Precio S/.");
+    colPrecio.setCellValueFactory(new PropertyValueFactory<>("precioUnidad"));
 
-        table.getColumns().addAll(colId, colTipo, colCapacidad, colStock, colPrecio);
-        table.setItems(data);
+    table.getColumns().addAll(colId, colTipo, colCapacidad, colStock, colPrecio);
+    table.setItems(data);
 
-        // Botones
-        Button btnRefresh = new Button("Actualizar");
-        Button btnAgregar = new Button("Agregar");
-        Button btnEliminar = new Button("Eliminar");
+    // Crear botones
+    Button btnRefresh = new Button("Actualizar");
+    Button btnAgregar = new Button("Agregar");
+    Button btnEliminar = new Button("Eliminar");
+    Button btnVentas = new Button("Registrar Venta");
 
-        btnRefresh.setOnAction(e -> cargarDatos());
-        btnAgregar.setOnAction(e -> mostrarFormularioAgregar());
-        btnEliminar.setOnAction(e -> {
-            Envase selected = table.getSelectionModel().getSelectedItem();
-            if (selected != null) {
-                controller.eliminarEnvase(selected.getId());
-                cargarDatos();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Seleccione un envase");
-                alert.show();
-            }
-        });
+    // Acciones
+    btnRefresh.setOnAction(e -> cargarDatos());
+    btnAgregar.setOnAction(e -> mostrarFormularioAgregar());
+    btnEliminar.setOnAction(e -> {
+        Envase selected = table.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            controller.eliminarEnvase(selected.getId());
+            cargarDatos();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Seleccione un envase");
+            alert.show();
+        }
+    });
+    btnVentas.setOnAction(e -> {
+        VentaView ventaView = new VentaView();
+        ventaView.start(new Stage());
+    });
 
-        HBox toolbar = new HBox(10, btnRefresh, btnAgregar, btnEliminar);
-        toolbar.setPadding(new Insets(10));
-        BorderPane root = new BorderPane();
-        root.setTop(toolbar);
-        root.setCenter(table);
+    // Barra de herramientas (toolbar) con todos los botones
+    HBox toolbar = new HBox(10, btnRefresh, btnAgregar, btnEliminar, btnVentas);
+    toolbar.setPadding(new Insets(10));
 
-        Scene scene = new Scene(root, 800, 500);
-        stage.setScene(scene);
-        stage.setTitle("Gestión de Inventario - El Serranito del Norte");
-        stage.show();
+    BorderPane root = new BorderPane();
+    root.setTop(toolbar);
+    root.setCenter(table);
 
-        cargarDatos();
+    Scene scene = new Scene(root, 800, 500);
+    stage.setScene(scene);
+    stage.setTitle("Gestión de Inventario - El Serranito del Norte");
+    stage.show();
+
+    cargarDatos();
     }
 
     private void cargarDatos() {
